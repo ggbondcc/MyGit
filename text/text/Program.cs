@@ -17,6 +17,11 @@ namespace text
             }
             foreach(int i in a)
             {
+                if(i==999)
+                {
+                    Console.Write(i);
+                    return;
+                }
                 Console.Write(i + ",");
             }
         }
