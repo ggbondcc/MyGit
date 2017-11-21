@@ -172,7 +172,7 @@ namespace DateBaseLink
         //删除数据
         public int Delete(string SQL)
         {
-            return 1;
+            return 0;
         }
     }
 }
