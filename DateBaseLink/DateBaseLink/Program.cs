@@ -33,7 +33,7 @@ namespace DateBaseLink
             {
                 Console.WriteLine("失败");
             }*/
-            Console.WriteLine( dbl.Delete(sql4));
+            //Console.WriteLine( dbl.Delete(sql4));
         }
     }
 }

@@ -16,11 +16,38 @@ namespace DateBaseLink
         //数据库对象
         private MySqlConnection MysqlCon;
         private MySqlCommand MysqlCom = new MySqlCommand();
+
+        public string Sqllink
+        {
+            get
+            {
+                return sqllink;
+            }
+
+            set
+            {
+                sqllink = value;
+            }
+        }
+
+        public MySqlConnection MysqlCon1
+        {
+            get
+            {
+                return MysqlCon;
+            }
+
+            set
+            {
+                MysqlCon = value;
+            }
+        }
+
         //通过传入数据库字符串初始化数据库连接
         public DataBaseLink(string sqllink)
         {
-            this.sqllink = sqllink;
-            MysqlCon = new MySqlConnection(this.sqllink);
+            this.Sqllink = sqllink;
+            MysqlCon1 = new MySqlConnection(this.Sqllink);
         }
         //通过传入数据库对象初始化数据库连接
         public DataBaseLink(MySqlConnection MysqlCon)
@@ -29,7 +56,7 @@ namespace DateBaseLink
             {
                 try
                 {
-                    this.MysqlCon.Open();
+                    this.MysqlCon1.Open();
                 }
                 catch (MySqlException ex)
                 {
@@ -38,12 +65,12 @@ namespace DateBaseLink
                 }
                 finally
                 {
-                    this.MysqlCon.Close();
+                    this.MysqlCon1.Close();
                 }
             }
             else
             {
-                this.MysqlCon = MysqlCon;
+                this.MysqlCon1 = MysqlCon;
             }
         }
         //插入数据
@@ -53,16 +80,16 @@ namespace DateBaseLink
             {
                 //MysqlCom = new MySqlCommand(SQL, MysqlCon);
                 MysqlCom.CommandText = SQL;
-                MysqlCom.Connection = MysqlCon;
-                MysqlCon.Open();
+                MysqlCom.Connection = MysqlCon1;
+                MysqlCon1.Open();
                 if(MysqlCom.ExecuteNonQuery()>0)
                 {
-                    MysqlCon.Close();
+                    MysqlCon1.Close();
                     return 1;
                 }
                 else
                 {
-                    MysqlCon.Close();
+                    MysqlCon1.Close();
                     return 0;
                 }
             }
@@ -87,17 +114,17 @@ namespace DateBaseLink
             try
             {
                 MysqlCom.CommandText = SQL;
-                MysqlCom.Connection = MysqlCon;
-                MysqlCon.Open();
+                MysqlCom.Connection = MysqlCon1;
+                MysqlCon1.Open();
                 //Console.WriteLine(SQL);
                 if (MysqlCom.ExecuteNonQuery() > 0)
                 {
-                    MysqlCon.Close();
+                    MysqlCon1.Close();
                     return 1;
                 }
                 else
                 {
-                    MysqlCon.Close();
+                    MysqlCon1.Close();
                     return 0;
                 }
             }
@@ -116,16 +143,16 @@ namespace DateBaseLink
             {
                 //MysqlCom = new MySqlCommand(SQL, MysqlCon);
                 MysqlCom.CommandText = SQL;
-                MysqlCom.Connection = MysqlCon;
-                MysqlCon.Open();
+                MysqlCom.Connection = MysqlCon1;
+                MysqlCon1.Open();
                 if (MysqlCom.ExecuteNonQuery() > 0)
                 {
-                    MysqlCon.Close();
+                    MysqlCon1.Close();
                     return 1;
                 }
                 else
                 {
-                    MysqlCon.Close();
+                    MysqlCon1.Close();
                     return 0;
                 }
             }
@@ -148,18 +175,18 @@ namespace DateBaseLink
             try
             {
                 MysqlCom.CommandText = SQL;
-                MysqlCom.Connection = MysqlCon;
-                MysqlCon.Open();
+                MysqlCom.Connection = MysqlCon1;
+                MysqlCon1.Open();
             //Console.WriteLine(SQL);
             
                 if (MysqlCom.ExecuteNonQuery() > 0)
                 {
-                    MysqlCon.Close();
+                    MysqlCon1.Close();
                     return 1;
                 }
                 else
                 {
-                    MysqlCon.Close();
+                    MysqlCon1.Close();
                     return 0;
                 }
             }
@@ -181,16 +208,16 @@ namespace DateBaseLink
             {
                 //MysqlCom = new MySqlCommand(SQL, MysqlCon);
                 MysqlCom.CommandText = SQL;
-                MysqlCom.Connection = MysqlCon;
-                MysqlCon.Open();
+                MysqlCom.Connection = MysqlCon1;
+                MysqlCon1.Open();
                 if (MysqlCom.ExecuteNonQuery() > 0)
                 {
-                    MysqlCon.Close();
+                    MysqlCon1.Close();
                     return 1;
                 }
                 else
                 {
-                    MysqlCon.Close();
+                    MysqlCon1.Close();
                     return 0;
                 }
             }
@@ -212,18 +239,18 @@ namespace DateBaseLink
             try
             {
                 MysqlCom.CommandText = SQL;
-                MysqlCom.Connection = MysqlCon;
-                MysqlCon.Open();
+                MysqlCom.Connection = MysqlCon1;
+                MysqlCon1.Open();
                 //Console.WriteLine(SQL);
 
                 if (MysqlCom.ExecuteNonQuery() > 0)
                 {
-                    MysqlCon.Close();
+                    MysqlCon1.Close();
                     return 1;
                 }
                 else
                 {
-                    MysqlCon.Close();
+                    MysqlCon1.Close();
                     return 0;
                 }
             }
@@ -246,9 +273,9 @@ namespace DateBaseLink
             try
             {
                 MysqlCom.CommandText = SQL;
-                MysqlCom.Connection = MysqlCon;
+                MysqlCom.Connection = MysqlCon1;
                 MySqlDataReader reader = null;
-                MysqlCon.Open();
+                MysqlCon1.Open();
                 reader = MysqlCom.ExecuteReader();
                 //MysqlCon.Close();
                 return reader;
@@ -264,7 +291,7 @@ namespace DateBaseLink
         //关闭数据库
         public void DataBaseClose()
         {
-            MysqlCon.Close();
+            MysqlCon1.Close();
         }
     }
 }
