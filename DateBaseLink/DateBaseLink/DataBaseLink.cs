@@ -234,5 +234,37 @@ namespace DateBaseLink
             }
         }
         
+        //查找数据
+        public MySqlDataReader Select(Object[] data,string SQL)
+        {
+            int i = 0;
+            foreach (Object a in data)
+            {
+                SQL = SQL.Replace("{" + i + "}", "'" + a.ToString() + "'");
+                i++;
+            }
+            try
+            {
+                MysqlCom.CommandText = SQL;
+                MysqlCom.Connection = MysqlCon;
+                MySqlDataReader reader = null;
+                MysqlCon.Open();
+                reader = MysqlCom.ExecuteReader();
+                //MysqlCon.Close();
+                return reader;
+
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine(ex.ErrorCode);
+                throw;
+            }
+            //return reader;
+        }
+        //关闭数据库
+        public void DataBaseClose()
+        {
+            MysqlCon.Close();
+        }
     }
 }
