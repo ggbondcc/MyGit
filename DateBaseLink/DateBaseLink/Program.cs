@@ -15,14 +15,15 @@ namespace DateBaseLink
             Object[] data = { "haha", "asdfgh" };
             string sqllink = "Host =localhost;Database=socket;Username=root;Password=123456";
             DataBaseLink dbl = new DataBaseLink(sqllink);
-            if(dbl.Updata(data, sql2)>0)
+            /*if(dbl.Updata(data, sql2)>0)
             {
                 Console.WriteLine("成功");
             }
             else
             {
                 Console.WriteLine("失败");
-            }
+            }*/
+            dbl.Delete(sql);
         }
     }
 }

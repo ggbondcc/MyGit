@@ -172,7 +172,67 @@ namespace DateBaseLink
         //删除数据
         public int Delete(string SQL)
         {
-            return 0;
+            /* string sql1 = "UPDATE user SET username=@username,userpassword=@userpassword where username='wyh";
+             MysqlCom.CommandText = sql1;
+             MysqlCom.Parameters.AddWithValue("@username", "wyh");
+             MysqlCom.Parameters.AddWithValue("@userpassword", "123456");
+             Console.WriteLine(MysqlCom.CommandText);*/
+            try
+            {
+                //MysqlCom = new MySqlCommand(SQL, MysqlCon);
+                MysqlCom.CommandText = SQL;
+                MysqlCom.Connection = MysqlCon;
+                MysqlCon.Open();
+                if (MysqlCom.ExecuteNonQuery() > 0)
+                {
+                    MysqlCon.Close();
+                    return 1;
+                }
+                else
+                {
+                    MysqlCon.Close();
+                    return 0;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine(ex.ErrorCode);
+                throw;
+            }
         }
+        //删除数据Object替换
+        public int Delete(Object[] data ,string SQL)
+        {
+            int i = 0;
+            foreach (Object a in data)
+            {
+                SQL = SQL.Replace("{" + i + "}", "'" + a.ToString() + "'");
+                i++;
+            }
+            try
+            {
+                MysqlCom.CommandText = SQL;
+                MysqlCom.Connection = MysqlCon;
+                MysqlCon.Open();
+                //Console.WriteLine(SQL);
+
+                if (MysqlCom.ExecuteNonQuery() > 0)
+                {
+                    MysqlCon.Close();
+                    return 1;
+                }
+                else
+                {
+                    MysqlCon.Close();
+                    return 0;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine(ex.ErrorCode);
+                throw;
+            }
+        }
+        
     }
 }
