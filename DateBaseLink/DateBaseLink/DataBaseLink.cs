@@ -199,11 +199,6 @@ namespace DateBaseLink
         //删除数据
         public int Delete(string SQL)
         {
-            /* string sql1 = "UPDATE user SET username=@username,userpassword=@userpassword where username='wyh";
-             MysqlCom.CommandText = sql1;
-             MysqlCom.Parameters.AddWithValue("@username", "wyh");
-             MysqlCom.Parameters.AddWithValue("@userpassword", "123456");
-             Console.WriteLine(MysqlCom.CommandText);*/
             try
             {
                 //MysqlCom = new MySqlCommand(SQL, MysqlCon);
@@ -260,8 +255,28 @@ namespace DateBaseLink
                 throw;
             }
         }
-        
+
         //查找数据
+        public MySqlDataReader Select(string SQL)
+        {
+            try
+            {
+                MysqlCom.CommandText = SQL;
+                MysqlCom.Connection = MysqlCon;
+                MySqlDataReader reader = null;
+                MysqlCon.Open();
+                reader = MysqlCom.ExecuteReader();
+                return reader;
+
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine(ex.ErrorCode);
+                throw;
+            }
+        }
+
+        //查找数据Object替换
         public MySqlDataReader Select(Object[] data,string SQL)
         {
             int i = 0;
