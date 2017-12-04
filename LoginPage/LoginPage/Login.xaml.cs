@@ -51,12 +51,12 @@ namespace LoginPage
                 DBA.DataBaseClose();
             }
         }
-
+        //返回点击时事件
         private void UserName_IsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             UseNameSelect.Content = "";
         }
-
+        //回车登录
         private void UserName_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.Enter)
@@ -64,10 +64,33 @@ namespace LoginPage
                 this.LoginBut_Click(new object { } ,new RoutedEventArgs());
             }
         }
-
+        //登录
         private void LoginBut_Click(object sender, RoutedEventArgs e)
         {
-            
+            if(UserName.Text=="")
+            {
+                notlog.Content = "请输入用户名";
+            }
+            else if(UserPassword.Text == "")
+            {
+                notlog.Content = "请输入密码";
+            }
+            else
+            {
+                string DbLink = "Host = localhost; Database = socket; Username = root; Password = 123456";
+                DataBaseLink DBA = new DataBaseLink(DbLink);
+                string SQL = "SELECT username,userpassword FROM user WHERE username={0} AND userpassword={1}";
+                object[] value = { UserName.Text, UserPassword.Text };
+                MySqlDataReader Read = DBA.Select(value, SQL);
+                if (Read.Read())
+                {
+                    MessageBox.Show("yes");
+                }
+                else
+                {
+                    notlog.Content = "用户名或者密码错误";
+                }
+            }
         }
     }
 }
