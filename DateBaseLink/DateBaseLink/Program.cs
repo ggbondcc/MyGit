@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using System.Net;
+
 
 namespace DateBaseLink
 {
@@ -11,7 +13,13 @@ namespace DateBaseLink
     {
         static void Main(string[] args)
         {
-            string sql = "INSERT INTO user(username,userpassword) values({0},{1})";
+            System.Net.IPAddress[] address = Dns.GetHostEntry(Dns.GetHostName()).AddressList;
+            foreach(IPAddress a in address)
+            {
+                Console.WriteLine(a);
+            }
+            Console.ReadKey();
+            /*string sql = "INSERT INTO user(username,userpassword) values({0},{1})";
             string sql2 = "UPDATE user SET username={0},userpassword={1}where username='wyh'";
             string sql3 = "SELECT * FROM user";
             string sql4 = "DELETE FROM user WHERE username='aaa'";
@@ -19,7 +27,7 @@ namespace DateBaseLink
             string sqllink = "Host =localhost;Database=socket;Username=root;Password=123456";
             DataBaseLink dbl = new DataBaseLink(sqllink);
             MySqlDataReader re = dbl.Select(data, sql3);
-            while(re.Read())
+            /*while(re.Read())
             {
                 Console.WriteLine(re[0].ToString() + re[1].ToString() + re[2].ToString());
             }
@@ -35,5 +43,7 @@ namespace DateBaseLink
             }*/
             //Console.WriteLine( dbl.Delete(sql4));
         }
+
+        
     }
 }
