@@ -23,6 +23,9 @@ namespace LoginPage
         public MainWindow()
         {
             InitializeComponent();
+            Login LogPag = new Login();
+            this.Close();
+            LogPag.ShowDialog();
         }
     }
 }
