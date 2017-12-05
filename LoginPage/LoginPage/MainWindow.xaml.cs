@@ -26,6 +26,7 @@ namespace LoginPage
             Login LogPag = new Login();
             this.Close();
             LogPag.ShowDialog();
+            string a = LogPag.LoginUserName;
         }
     }
 }

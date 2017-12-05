@@ -16,11 +16,13 @@ using MySql.Data.MySqlClient;
 
 namespace LoginPage
 {
+
     /// <summary>
     /// Login.xaml 的交互逻辑
     /// </summary>
     public partial class Login : Window
     {
+        public string LoginUserName = "";
         public Login()
         {
             InitializeComponent();
@@ -84,6 +86,7 @@ namespace LoginPage
                 MySqlDataReader Read = DBA.Select(value, SQL);
                 if (Read.Read())
                 {
+                    LoginUserName = UserName.Text;
                     MessageBox.Show("yes");
                 }
                 else
