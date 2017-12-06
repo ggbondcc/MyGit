@@ -22,7 +22,7 @@ namespace LoginPage
     /// </summary>
     public partial class Login : Window
     {
-        public string LoginUserName = "";
+        
         public Login()
         {
             InitializeComponent();
@@ -42,6 +42,7 @@ namespace LoginPage
                 object[] Value = { UserName.Text };
                 MySqlDataReader Read = null;
                 Read = DBA.Select(Value, SQL);
+                //DBA.DataBaseClose();
                 if (Read.Read())
                 {
                     UseNameSelect.Content = "√";
@@ -84,13 +85,20 @@ namespace LoginPage
                 string SQL = "SELECT username,userpassword FROM user WHERE username={0} AND userpassword={1}";
                 object[] value = { UserName.Text, UserPassword.Text };
                 MySqlDataReader Read = DBA.Select(value, SQL);
+                
                 if (Read.Read())
                 {
-                    LoginUserName = UserName.Text;
+                    //LoginUserName = UserName.Text;
                     MessageBox.Show("yes");
+                    MainWindow Mw = new MainWindow(UserName.Text);
+                    //MainWindow.LoginUserName = UserName.Text;
+                    DBA.DataBaseClose();
+                    this.Close();
+                    Mw.ShowDialog();
                 }
                 else
                 {
+                    DBA.DataBaseClose();
                     notlog.Content = "用户名或者密码错误";
                 }
             }
